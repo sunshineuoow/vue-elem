@@ -10,7 +10,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 		let dataStr = '';
 		Object.keys(data).forEach(key => {
 			dataStr += key + '=' + data[key] + '&';
-		})
+		});
 
 		if ( dataStr !== '') {
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
@@ -28,11 +28,11 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			},
 			mode: 'cors',
 			cache: 'force-cache'
-		}
+		};
 
 		if (type == 'POST') {
 			Object.defineProperty(requestConfig, 'body', {
-				value: JSON.stringigy(data)
+				value: JSON.stringify(data)
 			})
 		}
 

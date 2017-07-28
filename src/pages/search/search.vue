@@ -8,7 +8,7 @@
         <section v-if="restaurantList.length">
             <h4 class="title_restaurant">商家</h4>
             <ul class="list_container">
-                <li v-for="item in restaurantList" :key="item.id" class="list_li">
+                <router-link :to="{path: '/shop', query:{id: item.id}}" tag="li" v-for="item in restaurantList" :key="item.id" class="list_li">
                     <section class="item_left">
                         <img :src="imgBaseUrl + item.image_path" class="restaurant_img">
                     </section>
@@ -27,20 +27,20 @@
                         </div>
                         <ul class="item_right_detail">
                             <li v-for="activity in item.activities" :key="activity.id">
-                                <span class="activity_icon">{{activity.icon_name}}</span>
+                                <span class="activity_icon" :style="{backgroundColor: '#' + activity.icon_color}">{{activity.icon_name}}</span>
                                 <span>{{activity.name}}</span>
                                 <span class="only_phone">(手机用户专享)</span>
                             </li>
                         </ul>
                     </section>
-                </li>
+                </router-link>
             </ul>
         </section>
         <section class="search_history" v-if="searchHistory.length&&showHistory">
             <h4 class="title_restaurant">搜索历史</h4>
             <ul>
                 <li v-for="(item, index) in searchHistory" :key="index" class="history_li">
-                    <span class="history_text ellipsis">{{item}}</span>
+                    <span class="history_text ellipsis" @click="searchTarget(item)">{{item}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="delete_icon" @click="deleteHistory(index)">
                         <line x1="8" y1="8" x2="18" y2="18" style="stroke:#999;stroke-width:3" />
                         <line x1="18" y1="8" x2="8" y2="18" style="stroke:#999;stroke-width:3" />

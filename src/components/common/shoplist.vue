@@ -1,7 +1,7 @@
 <template>
 	<div class="shoplist_container">
 		<ul v-load-more="loaderMore" v-if="shopListArr.length" type="1">
-			<li v-for="item in shopListArr" :key="item.id" class="shop_li">
+			<router-link :to="{path: 'shop', query:{geohash, id: item.id}}" tag="li" v-for="item in shopListArr" :key="item.id" class="shop_li">
 				<section>
 					<img :src="imgBaseUrl + item.image_path" class="shop_img"></img>
 				</section>
@@ -56,7 +56,7 @@
 						</p>
 					</h5>
 				</hgroup>
-			</li>
+			</router-link>
 		</ul>
 		<ul class="animation_opacity" v-else>
 			<li class="list_back_li" v-for="item in 10" :key="item">

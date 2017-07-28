@@ -5,8 +5,8 @@ const city = r => require.ensure([], () => r(require('../pages/city/city')), 'ci
 const msite = r => require.ensure([], () => r(require('../pages/msite/msite')), 'msite');
 const search = r => require.ensure([], () => r(require('../pages/search/search')), 'search');
 const shop = r => require.ensure([], () => r(require('../pages/shop/shop')), 'shop');
-const foodDetail = r => require.ensure([], () => r(require('../../pages/shop/children/foodDetail')), 'foodDetail');
-const shopDetail = r => require.ensure([], () => r(require('../../pages/shop/children/shopDetail')), 'shopDetail');
+const foodDetail = r => require.ensure([], () => r(require('../pages/shop/children/foodDetail')), 'foodDetail');
+const shopDetail = r => require.ensure([], () => r(require('../pages/shop/children/shopDetail')), 'shopDetail');
 
 
 export default [{

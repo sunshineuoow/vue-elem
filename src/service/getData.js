@@ -90,9 +90,27 @@ export const shopList = (latitude, longitude, offset, restaurant_category_id = '
 	return fetch('/shopping/restaurants', data);
 };
 
+/**
+ * 获取search搜索结果
+ */
 export const searchRestaurant = (geohash, keyword) => fetch('/v4/restaurants/', {
 	'extras[]': 'restaurant_activity',
 	geohash,
 	keyword,
 	type: 'search'
+});
+
+/**
+ * 获取shop商铺详情
+ */
+export const shopDetails = (shopId, latitude, longitude) => fetch('/shopping/restaurant/' + shopId, {
+	latitude,
+	longitude
+});
+
+/**
+ * 获取shop页面菜单列表
+ */
+export const foodMenu = (restaurant_id) => fetch('/shopping/v2/menu', {
+	restaurant_id
 });
