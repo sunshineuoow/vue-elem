@@ -48,7 +48,7 @@
 	import shopList from '../../components/common/shoplist'
 	import footGuide from '../../components/footer/footGuide'
 	import { msiteAddress, msiteFoodTypes, cityGuess } from '../../service/getData'
-	import { swiper, swiperSlide} from 'vue-awesome-swiper'
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	export default {
 		data () {

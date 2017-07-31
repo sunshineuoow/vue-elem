@@ -4,7 +4,7 @@ import mutations from './mutations'
 import actions from './action'
 import getters from './getters'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
 	latitude: '', // 当前位置维度，
@@ -33,7 +33,7 @@ const state = {
 	addAddress: '', // 新增地址
 	question: null, // 问题详情
 	cartPrice: null, // 会员卡价格
-}
+};
 
 export default new Vuex.Store({
 	state,

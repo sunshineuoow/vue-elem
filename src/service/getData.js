@@ -114,3 +114,23 @@ export const shopDetails = (shopId, latitude, longitude) => fetch('/shopping/res
 export const foodMenu = (restaurant_id) => fetch('/shopping/v2/menu', {
 	restaurant_id
 });
+
+/**
+ * 获取商铺评价列表
+ */
+export const getRatingList = (shopId, offset, tag_name= '') => fetch('/ugc/v2/restaurants/' + shopId + '/ratings', {
+	has_content: true,
+	offset,
+	limit: 10,
+	tag_name
+});
+
+/**
+ * 获取商铺评价分数
+ */
+export const ratingScores = shopId => fetch('/ugc/v2/restaurants/' + shopId + '/ratings/scores');
+
+/**
+ * 获取商铺评价分类
+ */
+export const ratingTags = shopId => fetch('/ugc/v2/restaurants/' + shopId + '/ratings/tags');

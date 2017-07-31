@@ -65,5 +65,76 @@ export default {
 	//保存geohash
 	[SAVE_GEOHASH](state, geohash) {
 		state.geohash = geohash;
-	}
+	},
+	//加入购物车
+	[ADD_CART](state, {
+		shopId,
+		category_id,
+		item_id,
+		food_id,
+		name,
+		price,
+		specs,
+		packing_fee,
+		sku_id,
+		stock
+	}) {
+		let cart = state.cartList;
+		let shop = cart[shopId] = (cart[shopId] || {});
+		let category = shop[category_id] = (shop[category_id] || {});
+		let item = category[item_id] = (category[item_id] || {});
+		if (item[food_id]) {
+			item[food_id]['num']++;
+		} else {
+			item[food_id] = {
+				"num": 1,
+				"id": food_id,
+				"name": name,
+				"price": price,
+				"specs": specs,
+				"packing_fee": packing_fee,
+				"sku_id": sku_id,
+				"stock": stock
+			};
+		}
+		state.cartList = {...cart};
+		setStore('buyCart', state.cartList);
+	},
+	//移出购物车
+	[REDUCE_CART](state, {
+		shopId,
+		category_id,
+		item_id,
+		food_id,
+		price,
+		specs
+	}) {
+		let cart = state.cartList;
+		let shop = (cart[shopId] || {});
+		let category = (shop[category_id] || {});
+		let item = (category[item_id] || {});
+		if (item && item[food_id]) {
+			if (item[food_id]['num'] > 0) {
+				item[food_id]['num']--;
+				state.cartList = {...cart};
+				setStore('buyCart', state.cartList);
+			} else {
+				item[food_id] = null;
+			}
+		}
+	},
+	//网页初始化时从本地获取购物车信息
+	[INIT_BUYCART](state) {
+		let initCart = getStore('buyCart');
+		if (initCart) {
+			state.cartList = JSON.parse(initCart);
+		}
+	},
+	//清空当前商店购物车
+	[CLEAR_CART](state, shopId) {
+		state.cartList[shopId] = null;
+		state.cartList = {...state.cartList};
+		setStore('buyCart', state.cartList);
+	},
+
 }
