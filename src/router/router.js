@@ -7,7 +7,8 @@ const search = r => require.ensure([], () => r(require('../pages/search/search')
 const shop = r => require.ensure([], () => r(require('../pages/shop/shop')), 'shop');
 const foodDetail = r => require.ensure([], () => r(require('../pages/shop/children/foodDetail')), 'foodDetail');
 const shopDetail = r => require.ensure([], () => r(require('../pages/shop/children/shopDetail')), 'shopDetail');
-
+const shopSafe = r => require.ensure([], () => r(require('../pages/shop/children/children/shopSafe')), 'shopSafe');
+const food = r => require.ensure([], () => r(require('../pages/food/food')), 'food');
 
 export default [{
 	path: '/',
@@ -34,6 +35,11 @@ export default [{
 			component: msite,
 			meta: { keepAlive: true },
 		},
+		//特色商铺列表页
+		{
+			path: '/food',
+			component: food
+		},
 		//搜索页
 		{
 			path: '/search/:geohash',
@@ -50,7 +56,11 @@ export default [{
 				},
 				{
 					path: 'shopDetail',
-					component: shopDetail
+					component: shopDetail,
+					children: [{
+						path: 'shopSafe',
+						component: shopSafe
+					}]
 				}
 			]
 		}

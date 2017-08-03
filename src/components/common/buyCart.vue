@@ -18,7 +18,7 @@
         <section class="choose_specification" v-else>
             <section class="choose_icon_container">
                 <transition name="showReduce">
-                    <svg v-if="foodNum" class="specs_reduce_icon">
+                    <svg v-if="foodNum" class="specs_reduce_icon" @click="showReduceTip">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
                     </svg>
                 </transition>
@@ -71,6 +71,7 @@
                 let elLeft = event.target.getBoundingClientRect().left;
                 let elBottom = event.target.getBoundingClientRect().bottom;
                 this.showMoveDot.push(true);
+                this.$emit('showMoveDot', this.showMoveDot, elLeft, elBottom);
             },
             removeOutCart(category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock) {
                 if (this.foodNum > 0) {
@@ -80,6 +81,9 @@
             showChooseList(foodScroll){
                 this.$emit('showChooseList', foodScroll);
             },
+            showReduceTip() {
+                this.$emit('showReduceTip');
+            }
         }
     }
 </script>

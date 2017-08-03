@@ -3,11 +3,11 @@
         <section v-if="!showLoading" class="shop_container">
             <nav class="go_back" @click="goBack">
                 <svg width="4rem" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255, 255, 255);stroke-width:3" />
+                    <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255, 255, 255);stroke-width:3"/>
                 </svg>
             </nav>
             <header class="shop_detail_header" :style="{zIndex: showActivities ? '14' : '10' }">
-                <img :src="imgBaseUrl + shopDetailData.image_path" class="header_cover_img" >
+                <img :src="imgBaseUrl + shopDetailData.image_path" class="header_cover_img">
                 <section class="description_header">
                     <router-link to="/shop/shopDetail" class="description_top">
                         <section class="description_left">
@@ -15,23 +15,27 @@
                         </section>
                         <section class="description_right">
                             <h4 class="description_title ellipsis">{{shopDetailData.name}}</h4>
-                            <p class="description_text">商家配送 / {{shopDetailData.order_lead_time}}分钟送达 / 配送费￥{{shopDetailData.float_delivery_fee}}</p>
+                            <p class="description_text">
+                                商家配送 / {{shopDetailData.order_lead_time}}分钟送达 / 配送费￥{{shopDetailData.float_delivery_fee}}</p>
                             <p class="description_promotion ellipsis">公告：{{promotionInfo}}</p>
                         </section>
-                        <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-                            <path d="M0 0 L8 7 L0 14"  stroke="#fff" stroke-width="1" fill="none"/>
+                        <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                             class="description_arrow">
+                            <path d="M0 0 L8 7 L0 14" stroke="#fff" stroke-width="1" fill="none"/>
                         </svg>
                     </router-link>
-                    <footer class="description_footer" v-if="shopDetailData.activities.length" @click.stop="showActivitiesFun">
+                    <footer class="description_footer" v-if="shopDetailData.activities.length"
+                            @click.stop="showActivitiesFun">
                         <p class="ellipsis">
-                            <span class="tip_icon" :style="{backgroundColor: '#' + shopDetailData.activities[0].icon_color, borderColor: '#' + shopDetailData.activities[0].icon_color}">
+                            <span class="tip_icon"
+                                  :style="{backgroundColor: '#' + shopDetailData.activities[0].icon_color, borderColor: '#' + shopDetailData.activities[0].icon_color}">
                                 {{shopDetailData.activities[0].icon_name}}
                             </span>
                             <span>{{shopDetailData.activities[0].description}}（APP专享）</span>
                         </p>
                         <p>{{shopDetailData.activities.length}}个活动</p>
                         <!--<svg class="footer_arrow">-->
-                            <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-left"></use>-->
+                        <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-left"></use>-->
                         <!--</svg>-->
                     </footer>
                 </section>
@@ -48,7 +52,8 @@
                         </header>
                         <ul>
                             <li v-for="item in shopDetailData.activities" :key="item.id">
-                                <span class="activities_icon" :style="{backgroundColor: '#' + item.icon_color, borderColor: '#' + item.icon_color}">{{item.icon_name}}</span>
+                                <span class="activities_icon"
+                                      :style="{backgroundColor: '#' + item.icon_color, borderColor: '#' + item.icon_color}">{{item.icon_name}}</span>
                                 <span>{{item.name}}（APP专享）</span>
                             </li>
                         </ul>
@@ -71,18 +76,21 @@
                     <span :class="{activity_show: changeShowType == 'food'}" @click="changeShowType='food'">商品</span>
                 </div>
                 <div>
-                    <span :class="{activity_show: changeShowType == 'rating'}" @click="changeShowType='rating'">评价</span>
+                    <span :class="{activity_show: changeShowType == 'rating'}"
+                          @click="changeShowType='rating'">评价</span>
                 </div>
             </section>
             <transition name="fade-choose">
                 <section v-show="changeShowType=='food'" class="food_container">
                     <section class="menu_container">
-                        <section class="menu_left">
+                        <section class="menu_left" id="wrapper_menu" ref="wrapperMenu">
                             <ul>
-                                <li v-for="(item, index) in menuList" :key="index" class="menu_left_li">
+                                <li v-for="(item, index) in menuList" :key="index" class="menu_left_li"
+                                    :class="{active_menu: index == menuIndex}" @click="chooseMenu(index)">
                                     <img :src="getImgPath(item.icon_url)" v-if="item.icon_url">
                                     <span>{{item.name}}</span>
-                                    <span class="category_num" v-if="categoryNum[index]&&item.type==1">{{categoryNum[index]}}</span>
+                                    <span class="category_num"
+                                          v-if="categoryNum[index]&&item.type==1">{{categoryNum[index]}}</span>
                                 </li>
                             </ul>
                         </section>
@@ -101,8 +109,11 @@
                                             </p>
                                         </span>
                                     </header>
-                                    <section v-for="(food, foodIndex) in item.foods" :key="foodIndex" class="menu_detail_list">
-                                        <router-link :to="{path: 'shop/foodDetail', query:{image_path: food.image_path}}" tag="div" class="menu_detail_link">
+                                    <section v-for="(food, foodIndex) in item.foods" :key="foodIndex"
+                                             class="menu_detail_list">
+                                        <router-link
+                                                :to="{path: 'shop/foodDetail', query:{image_path: food.image_path, description: food.description, month_sales: food.month_sales, name: food.name, rating: food.rating, rating_count: food.rating_count, satisfy_rate: food.satisfy_rate, food, shopId}}"
+                                                tag="div" class="menu_detail_link">
                                             <section class="menu_food_img">
                                                 <img :src="imgBaseUrl + food.image_path">
                                             </section>
@@ -110,8 +121,12 @@
                                                 <h3 class="food_description_head">
                                                     <strong class="description_foodname">{{food.name}}</strong>
                                                     <ul v-if="food.attributes.length" class="attributes_ul">
-                                                        <li v-for="(attribute, attrIndex) in food.attributes" :key="attrIndex" :style="{color: '#' + attribute.icon_color, borderColor: '#' + attribute.icon_color}" :class="{attribute_new: attribute.icon_name == '新'}">
-                                                            <p :style="{color: attribute.icon_name == '新'? '#fff' : '#' + attribute.icon_color}">{{attribute.icon_name == '新'? '新品' : attribute.icon_name}}</p>
+                                                        <li v-for="(attribute, attrIndex) in food.attributes"
+                                                            :key="attrIndex"
+                                                            :style="{color: '#' + attribute.icon_color, borderColor: '#' + attribute.icon_color}"
+                                                            :class="{attribute_new: attribute.icon_name == '新'}">
+                                                            <p :style="{color: attribute.icon_name == '新'? '#fff' : '#' + attribute.icon_color}">
+                                                                {{attribute.icon_name == '新' ? '新品' : attribute.icon_name}}</p>
                                                         </li>
                                                     </ul>
                                                 </h3>
@@ -131,7 +146,8 @@
                                                 <span>{{food.specfoods[0].price}}</span>
                                                 <span v-if="food.specifications">起</span>
                                             </section>
-                                            <buy-cart :food="food" :shopId="shopId" @showChooseList="showChooseList"></buy-cart>
+                                            <buy-cart :food="food" :shopId="shopId" @showChooseList="showChooseList"
+                                                      @showReduceTip="showReduceTip" @moveInCart="listenInCart" @showMoveDot="showMoveDotFn"></buy-cart>
                                         </footer>
                                     </section>
                                 </li>
@@ -139,8 +155,10 @@
                         </section>
                     </section>
                     <section class="buy_cart_container">
-                        <section class="cart_icon_num">
-                            <div class="cart_icon_container" :class="{cart_icon_activity: totalPrice > 0}">
+                        <section class="cart_icon_num" @click="toggleCartList">
+                            <div class="cart_icon_container"
+                                 :class="{cart_icon_active: totalPrice > 0, move_in_cart:receiveInCart}"
+                                 ref="cartContainer">
                                 <span class="cart_list_length" v-if="totalNum">{{totalNum}}</span>
                                 <svg class="cart_icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-icon"></use>
@@ -151,16 +169,18 @@
                                 <div>配送费&yen;{{deliveryFee}}</div>
                             </div>
                         </section>
-                        <section class="go_to_pay" :class="{go_to_pay_active: minimumOrderAmount < 0}">
+                        <section class="go_to_pay" :class="{go_to_pay_active: minimumOrderAmount <= 0}">
                             <span class="go_to_pay_button_style" v-if="minimumOrderAmount > 0">还差&yen;{{minimumOrderAmount}}起送</span>
-                            <router-link :to="{path: '/confirmOrder', query:{geohash: shopId}}" class="go_to_pay_butotn_style" v-else>去结算</router-link>
+                            <router-link :to="{path: '/confirmOrder', query:{geohash: geohash, shopId: shopId}}"
+                                         class="go_to_pay_button_style" v-else>去结算
+                            </router-link>
                         </section>
                     </section>
                     <transition name="toggle-cart">
                         <section class="cart_food_list" v-show="showCartList&&cartFoodList.length">
                             <header>
                                 <h4>购物车</h4>
-                                <div>
+                                <div @click="clearCart">
                                     <svg>
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-remove"></use>
                                     </svg>
@@ -179,14 +199,17 @@
                                             <span>{{item.price}}</span>
                                         </div>
                                         <section class="cart_list_control">
-                                            <span>
+                                            <span @click="removeOutCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
                                                 <svg>
-                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                         xlink:href="#cart-minus"></use>
                                                 </svg>
                                             </span>
                                             <span class="cart_num">{{item.num}}</span>
-                                            <svg class="cart_add">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
+                                            <svg class="cart_add"
+                                                 @click="addToCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                     xlink:href="#cart-add"></use>
                                             </svg>
                                         </section>
                                     </li>
@@ -195,19 +218,20 @@
                         </section>
                     </transition>
                     <transition name="fade">
-                        <div class="screen_cover" v-show="showCartList&&cartFoodList.length"></div>
+                        <div class="screen_cover" v-show="showCartList&&cartFoodList.length"
+                             @click="toggleCartList"></div>
                     </transition>
                 </section>
             </transition>
             <transition name="fade-choose">
                 <section class="rating_container" id="ratingContainer" v-show="changeShowType == 'rating'">
-                    <section>
+                    <section v-load-more="loadMoreRating" type="2">
                         <section>
                             <header class="rating_header">
                                 <section class="rating_header_left">
                                     <p>{{shopDetailData.rating}}</p>
                                     <p>综合评价</p>
-                                    <p>高于周边商家{{(ratingScoresData.compare_rating*100).toFixed(1)}}%</p>
+                                    <p>高于周边商家{{(ratingScoresData.compare_rating * 100).toFixed(1)}}%</p>
                                 </section>
                                 <section class="rating_header_right">
                                     <p>
@@ -227,7 +251,10 @@
                                 </section>
                             </header>
                             <ul class="tag_list_ul">
-                                <li v-for="(tag, index) in ratingTagsList" :key="index" :class="{unsatisfied: tag.unsatisfied, tagActive: ratingTagIndex == index}" @click="changeTagIndex(index, tag.name)">{{tag.name}}({{tag.count}})</li>
+                                <li v-for="(tag, index) in ratingTagsList" :key="index"
+                                    :class="{unsatisfied: tag.unsatisfied, tagActive: ratingTagIndex == index}"
+                                    @click="changeTagIndex(index, tag.name)">{{tag.name}}({{tag.count}})
+                                </li>
                             </ul>
                             <ul class="rating_list_ul">
                                 <li class="rating_list_li" v-for="(rating, index) in ratingList" :key="index">
@@ -245,11 +272,12 @@
                                         </header>
                                         <ul class="food_img_ul">
                                             <li v-for="(item, index) in rating.item_ratings" :key="index">
-                                                <img :src="getImgPath(item.image_hash)">
+                                                <img :src="getImgPath(item.image_hash)" v-if="item.image_hash">
                                             </li>
                                         </ul>
                                         <ul class="food_name_ul">
-                                            <li class="ellipsis" v-for="(item, index) in rating.item_ratings" :key="index">
+                                            <li class="ellipsis" v-for="(item, index) in rating.item_ratings"
+                                                :key="index">
                                                 {{item.food_name}}
                                             </li>
                                         </ul>
@@ -269,15 +297,17 @@
                 <div class="specs_list" v-if="showSpecs">
                     <header class="specs_list_header">
                         <h4 class="ellipsis">{{chosenFood.name}}</h4>
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" class="specs_cancel" @click="showChooseList">
-                            <line x1="0" y1="0" x2="16" y2="16"  stroke="#666" stroke-width="1.2"/>
-                            <line x1="0" y1="16" x2="16" y2="0"  stroke="#666" stroke-width="1.2"/>
+                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                             class="specs_cancel" @click="showChooseList">
+                            <line x1="0" y1="0" x2="16" y2="16" stroke="#666" stroke-width="1.2"/>
+                            <line x1="0" y1="16" x2="16" y2="0" stroke="#666" stroke-width="1.2"/>
                         </svg>
                     </header>
                     <section class="specs_details">
                         <h5 class="specs_details_title">{{chosenFood.specifications[0].name}}</h5>
                         <ul>
-                            <li v-for="(item, index) in chosenFood.specifications[0].values" :class="{specs_active: index == specsIndex}" @click="chooseSpecs(index)">
+                            <li v-for="(item, index) in chosenFood.specifications[0].values"
+                                :class="{specs_active: index == specsIndex}" @click="chooseSpecs(index)">
                                 {{item}}
                             </li>
                         </ul>
@@ -287,26 +317,47 @@
                             <span>&yen;</span>
                             <span>{{chosenFood.specfoods[specsIndex].price}}</span>
                         </div>
-                        <div class="specs_addto_cart" @click="addSpecs(chosenFood.category_id, chosenFood.item_id, chosenFood.specfoods[specsIndex].name, chosenFood.specfoods[specsIndex].price, chosenFood.specifications[0].values[specsIndex], chosenFood.specfoods[specsIndex].packing_fee, chosenFood.specfoods[specsIndex].sku_id, chosenFood.specfoods[specsIndex].stock)">加入购物车</div>
+                        <div class="specs_addto_cart"
+                             @click="addSpecs(chosenFood.category_id, chosenFood.item_id, chosenFood.specfoods[specsIndex].food_id ,chosenFood.specfoods[specsIndex].name, chosenFood.specfoods[specsIndex].price, chosenFood.specifications[0].values[specsIndex], chosenFood.specfoods[specsIndex].packing_fee, chosenFood.specfoods[specsIndex].sku_id, chosenFood.specfoods[specsIndex].stock)">
+                            加入购物车
+                        </div>
                     </footer>
                 </div>
             </transition>
         </section>
-        <loading v-show="showLoading || loadRatings"></loading>
+        <transition name="fade">
+            <p class="show_delete_tip" v-if="showDeleteTip">多规格商品只能去购物车删除哦</p>
+        </transition>
+        <transition
+                appear
+                @after-appear="afterEnter"
+                @before-appear="beforeEnter"
+                v-for="(item, index) in showMoveDot"
+                :key="index">
+            <span class="move_dot" v-if="item">
+                <svg class="move_linear">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
+                </svg>
+            </span>
+        </transition>
         <section class="animation_opacity shop_back_svg_container" v-if="showLoading">
             <img src="../../images/shop_back_svg.svg">
         </section>
+        <loading v-show="showLoading || loadRatings"></loading>
+        <transition name="router-slide" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
-    import { mapState, mapMutations } from 'vuex'
-    import { msiteAddress, shopDetails, foodMenu, getRatingList, ratingScores, ratingTags } from '../../service/getData'
+    import {mapState, mapMutations} from 'vuex'
+    import {msiteAddress, shopDetails, foodMenu, getRatingList, ratingScores, ratingTags} from '../../service/getData'
     import loading from '../../components/common/loading'
     import buyCart from '../../components/common/buyCart'
     import ratingStar from '../../components/common/ratingStar'
-    import { loadMore, getImgPath } from '../../components/common/mixin'
-    import { imgBaseUrl } from '../../config/env'
+    import {loadMore, getImgPath} from '../../components/common/mixin'
+    import {imgBaseUrl} from '../../config/env'
     import BScroll from 'better-scroll'
 
     export default {
@@ -319,12 +370,15 @@
                 shopDetailData: null,
                 showActivities: false,
                 menuList: [],
+                menuIndex: 0,
+                menuIndexChange: true,
                 shopListTop: [],
                 TitleDetailIndex: null,
                 categoryNum: [],
                 totalPrice: 0,
                 cartFoodList: [],
                 showCartList: false,
+                receiveInCart: false,
                 ratingList: null,
                 ratingOffset: 0,
                 ratingScoresData: null,
@@ -349,6 +403,7 @@
         created() {
             this.geohash = this.$route.query.geohash;
             this.shopId = this.$route.query.id;
+            this.INIT_BUYCART();
         },
         mounted() {
             this.initData();
@@ -361,6 +416,9 @@
             buyCart
         },
         computed: {
+            ...mapState([
+                'latitude', 'longitude', 'cartList'
+            ]),
             promotionInfo() {
                 return this.shopDetailData.promotion_info || "欢迎光临，用餐高峰请提前下单，谢谢";
             },
@@ -384,6 +442,9 @@
                 } else {
                     return null;
                 }
+            },
+            shopCart() {
+                return {...this.cartList[this.shopId]};
             }
         },
         methods: {
@@ -404,18 +465,119 @@
                 this.RECORD_SHOPDETAIL(this.shopDetailData);
                 this.hideLoading();
             },
-            getFoodListHeight(){
-                const listContainer = this.$refs.menuFoodlist;
+            initCategoryNum() {
+                let newArr = [];
+                let cartFoodNum = 0;
+                this.totalPrice = 0;
+                this.cartFoodList = [];
+                this.menuList.forEach((item, index) => {
+                    if (this.shopCart && this.shopCart[item.foods[0].category_id]) {
+                        let num = 0;
+                        Object.keys(this.shopCart[item.foods[0].category_id]).forEach(itemId => {
+                            Object.keys(this.shopCart[item.foods[0].category_id][itemId]).forEach(foodId => {
+                                let foodItem = this.shopCart[item.foods[0].category_id][itemId][foodId];
+                                num += foodItem.num;
+                                if (item.type == 1) {
+                                    this.totalPrice += foodItem.num * foodItem.price;
+                                    if (foodItem.num > 0) {
+                                        this.cartFoodList[cartFoodNum] = {};
+                                        this.cartFoodList[cartFoodNum].category_id = item.foods[0].category_id;
+                                        this.cartFoodList[cartFoodNum].item_id = itemId;
+                                        this.cartFoodList[cartFoodNum].food_id = foodId;
+                                        this.cartFoodList[cartFoodNum].num = foodItem.num;
+                                        this.cartFoodList[cartFoodNum].price = foodItem.price;
+                                        this.cartFoodList[cartFoodNum].name = foodItem.name;
+                                        this.cartFoodList[cartFoodNum].specs = foodItem.specs;
+                                        cartFoodNum++;
+                                    }
+                                }
+                            })
+                        });
+                        newArr[index] = num;
+                    } else {
+                        newArr[index] = 0;
+                    }
+                });
+                this.totalPrice = this.totalPrice.toFixed(2);
+                this.categoryNum = [...newArr];
+            },
+            getFoodListHeight() {
+                const listContainer = this.$refs.menuFoodList;
                 const listArr = Array.from(listContainer.children[0].children);
                 listArr.forEach((item, index) => {
                     this.shopListTop[index] = item.offsetTop;
                 });
                 this.listenScroll(listContainer);
             },
-            listenScroll(element){
+            listenScroll(element) {
                 this.foodScroll = new BScroll(element, {
                     probeType: 3,
+                    deceleration: 0.001,
+                    bounce: false,
+                    swipeTime: 2000,
+                    click: true
+                });
+                const wrapperMenu = new BScroll('#wrapper_menu', {
+                    click: true
+                });
+                const wrapMenuHeight = this.$refs.wrapperMenu.clientHeight;
+                this.foodScroll.on('scroll', (pos) => {
+                    if (this.$refs.wrapperMenu) return;
+                    this.shopListTop.forEach((item, index) => {
+                        if (this.menuIndexChange && Math.abs(Math.round(pos.y)) >= item) {
+                            this.menuIndex = index;
+                            const menuList = this.$refs.wrapperMenu.querySelectorAll('.active_menu');
+                            const el = menuList[0];
+                            wrapperMenu.scrollToElement(el, 800, 0, -(wrapMenuHeight / 2 - 50));
+                        }
+                    })
                 })
+            },
+            chooseMenu(index) {
+                this.menuIndex = index;
+                this.menuIndexChange = false;
+                this.foodScroll.scrollTo(0, -this.shopListTop[index], 400);
+                this.foodScroll.on('scrollEnd', () => {
+                    this.menuIndexChange = true;
+                })
+            },
+            showChooseList(food) {
+                if (food) {
+                    this.chosenFood = food;
+                }
+                this.showSpecs = !this.showSpecs;
+                this.specsIndex = 0;
+            },
+            chooseSpecs(index) {
+                this.specsIndex = index;
+            },
+            addSpecs(category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock) {
+                this.ADD_CART({
+                    shopId: this.shopId,
+                    category_id,
+                    item_id,
+                    food_id,
+                    name,
+                    price,
+                    specs,
+                    packing_fee,
+                    sku_id,
+                    stock
+                });
+                this.showChooseList();
+            },
+            toggleCartList() {
+                this.cartFoodList.length ? this.showCartList = !this.showCartList : true;
+            },
+            addToCart(category_id, item_id, food_id, name, price, specs) {
+                this.ADD_CART({shopId: this.shopId, category_id, item_id, food_id, name, price, specs});
+            },
+            removeOutCart(category_id, item_id, food_id, name, price, specs) {
+                this.REDUCE_CART({shopId: this.shopId, category_id, item_id, food_id, name, price, specs});
+            },
+            clearCart() {
+                this.toggleCartList();
+                this.CLEAR_CART(this.shopId);
             },
             async changeTagIndex(index, name) {
                 this.ratingTagIndex = index;
@@ -424,24 +586,65 @@
                 let res = await getRatingList(this.shopId, this.ratingOffset, name);
                 this.ratingList = [...res];
             },
-            showChooseList(food){
-                if (food) {
-                    this.chosenFood = food;
+            async loadMoreRating() {
+                if (this.preventRepeatRequest) return;
+                this.loadRatings = true;
+                this.preventRepeatRequest = true;
+                this.ratingOffset += 10;
+                let ratingData = await getRatingList(this.shopId, this.ratingOffset, this.ratingTagName);
+                this.ratingList = [...this.ratingList, ...ratingData];
+                this.loadRatings = false;
+                if (ratingData.length >= 10) {
+                    this.preventRepeatRequest = false;
                 }
-                this.showSpecs = !this.showSpecs;
-                this.specsIndex = 0;
-            },
-            chooseSpecs(index){
-                this.specsIndex = index;
-            },
-            addSpecs(category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock){
-                this.ADD_CART({shopId: this.shopId, category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock});
-                this.showChooseList();
             },
             showActivitiesFun() {
                 this.showActivities = !this.showActivities;
             },
-            showTitleDetail(index){
+            showReduceTip() {
+                this.showDeleteTip = true;
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
+                    clearTimeout(this.timer);
+                    this.showDeleteTip = false;
+                }, 3000);
+            },
+            showMoveDotFn(showMoveDot, elLeft, elBottom) {
+                this.showMoveDot = [...this.showMoveDot, ...showMoveDot];
+                this.elLeft = elLeft;
+                this.elBottom = elBottom;
+            },
+            beforeEnter(el){
+                el.style.transform = `translate3d(0,${37 + this.elBottom - this.windowHeight}px,0)`;
+                el.children[0].style.transform = `translate3d(${this.elLeft - 30}px,0,0)`;
+                el.children[0].style.opacity = 0;
+            },
+            afterEnter(el){
+                el.style.transform = `translate3d(0,0,0)`;
+                el.children[0].style.transform = `translate3d(0,0,0)`;
+                el.style.transition = 'transform .55s cubic-bezier(0.3, -0.25, 0.7, -0.15)';
+                el.children[0].style.transition = 'transform .55s linear';
+                this.showMoveDot = this.showMoveDot.map(item => false);
+                el.children[0].style.opacity = 1;
+                el.children[0].addEventListener('transitionend', () => {
+                    this.listenInCart();
+                });
+                el.children[0].addEventListener('webkitAnimationEnd', () => {
+                    this.listenInCart();
+                })
+            },
+            listenInCart() {
+                if (!this.receiveInCart) {
+                    this.receiveInCart = true;
+                    this.$refs.cartContainer.addEventListener('animationend', () => {
+                        this.receiveInCart = false;
+                    });
+                    this.$refs.cartContainer.addEventListener('webkitAniationEnd', () => {
+                        this.receiveInCart = false;
+                    })
+                }
+            },
+            showTitleDetail(index) {
                 if (this.TitleDetailIndex == index) {
                     this.TitleDetailIndex = null;
                 } else {
@@ -454,6 +657,44 @@
             goBack() {
                 this.$router.go(-1);
             }
+        },
+        watch: {
+            showLoading: function (value) {
+                if (!value) {
+                    this.$nextTick(() => {
+                        this.getFoodListHeight();
+                        this.initCategoryNum();
+                    })
+                }
+            },
+            shopCart: function (value) {
+                this.initCategoryNum();
+            },
+            cartFoodList: function (value) {
+                if (!value.length) {
+                    this.showCartList = false;
+                }
+            },
+            changeShowType: function (value) {
+                if (value === 'rating') {
+                    this.$nextTick(() => {
+                        this.ratingScroll = new BScroll('#ratingContainer', {
+                            probeType: 3,
+                            deceleration: 0.03,
+                            bounce: false,
+                            swipeTime: 2000,
+                            click: true
+                        });
+                        this.ratingScroll.on('scroll', pos => {
+                            if (Math.abs(Math.round(pos.y)) >= Math.abs(Math.round(this.ratingScroll.maxScrollY))) {
+                                this.loadMoreRating();
+                                this.ratingScroll.refresh();
+                            }
+                        })
+                    })
+                }
+            }
+
         }
     }
 </script>
@@ -461,7 +702,44 @@
 <style lang="scss" scoped>
     @import '../../style/mixin';
 
-    .shop_container{
+    @keyframes myMove {
+        0% {transform: scale(1)}
+        25% {transform: scale(.8)}
+        50% {transform: scale(1.1)}
+        75% {transform: scale(.9)}
+        100% {transform: scale(1)}
+    }
+    @-moz-keyframes myMove {
+        0% {transform: scale(1)}
+        25% {transform: scale(.8)}
+        50% {transform: scale(1.1)}
+        75% {transform: scale(.9)}
+        100% {transform: scale(1)}
+    }
+    @-webkit-keyframes myMove {
+        0% {transform: scale(1)}
+        25% {transform: scale(.8)}
+        50% {transform: scale(1.1)}
+        75% {transform: scale(.9)}
+        100% {transform: scale(1)}
+    }
+    @-o-keyframes myMove {
+        0% {transform: scale(1)}
+        25% {transform: scale(.8)}
+        50% {transform: scale(1.1)}
+        75% {transform: scale(.9)}
+        100% {transform: scale(1)}
+    }
+
+    .shop_back_svg_container {
+        position: fixed;
+        @include wh(100%, 100%);
+        img {
+            @include wh(100%, 100%);
+        }
+    }
+
+    .shop_container {
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -469,7 +747,8 @@
         left: 0;
         height: 100%;
     }
-    .go_back{
+
+    .go_back {
         position: fixed;
         top: 0;
         left: 0;
@@ -478,10 +757,11 @@
         padding: 0.3rem 0 0 0.6rem;
         z-index: 11;
     }
-    .shop_detail_header{
+
+    .shop_detail_header {
         position: relative;
         overflow: hidden;
-        .header_cover_img{
+        .header_cover_img {
             position: absolute;
             top: 0;
             left: 0;
@@ -489,56 +769,56 @@
             z-index: 9;
             filter: blur(10px);
         }
-        .description_header{
+        .description_header {
             position: relative;
             width: 100%;
             padding: 1.4rem 0 0.4rem 0.4rem;
             background-color: rgba(119, 103, 137, .43);
             z-index: 10;
             overflow: hidden;
-            .description_top{
+            .description_top {
                 display: flex;
-                .description_left{
+                .description_left {
                     margin-right: 0.3rem;
-                    img{
+                    img {
                         display: block;
                         @include wh(2.9rem, 2.9rem);
                         border-radius: 0.15rem;
                     }
                 }
-                .description_right{
+                .description_right {
                     flex: 1;
-                    .description_title{
+                    .description_title {
                         @include sc(.8rem, #fff);
                         width: 100%;
                         margin-bottom: 0.3rem;
                         font-weight: bold;
                     }
-                    .description_text{
+                    .description_text {
                         @include sc(.5rem, #fff);
                         margin-bottom: 0.3rem;
                     }
-                    .description_promotion{
+                    .description_promotion {
                         @include sc(.5rem, #fff);
                         width: 11.5rem;
                     }
                 }
-                .description_arrow{
+                .description_arrow {
                     @include ct;
                     right: 0.3rem;
                     z-index: 11;
                 }
             }
-            .description_footer{
+            .description_footer {
                 @include fj;
                 margin-top: 0.5rem;
                 padding-right: 1rem;
-                p{
+                p {
                     @include sc(.5rem, #fff);
-                    span{
+                    span {
                         color: #fff;
                     }
-                    .tip_icon{
+                    .tip_icon {
                         display: inline-block;
                         padding: 0 .04rem;
                         border: 0.025rem solid #fff;
@@ -546,10 +826,10 @@
                         font-size: .4rem;
                     }
                 }
-                .ellipsis{
+                .ellipsis {
                     width: 84%;
                 }
-                .footer_arrow{
+                .footer_arrow {
                     @include wh(.45rem, .45rem);
                     position: absolute;
                     right: .3rem;
@@ -557,7 +837,8 @@
             }
         }
     }
-    .activities_details{
+
+    .activities_details {
         position: fixed;
         top: 0;
         left: 0;
@@ -566,101 +847,102 @@
         padding: 1.125rem;
         background-color: #262626;
         z-index: 200;
-        .activities_shoptitle{
+        .activities_shoptitle {
             text-align: center;
             @include sc(.8rem, #fff);
         }
-        .activities_ratingstar{
+        .activities_ratingstar {
             display: flex;
             justify-content: center;
             transform: scale(2.2);
             margin-top: .7rem;
         }
-        .activities_list{
+        .activities_list {
             margin: 1.5rem 0 1rem;
             @include sc(.5rem, #fff);
-            li{
+            li {
                 margin-bottom: .2rem;
-                .activities_icon{
+                .activities_icon {
                     display: inline-block;
                     padding: 0 .02rem;
                     border: 0.025rem solid #fff;
                     border-radius: 0.1rem;
                 }
-                span{
+                span {
                     color: #fff;
                     line-height: .6rem;
                 }
             }
         }
-        .activities_shopinfo{
-            p{
+        .activities_shopinfo {
+            p {
                 line-height: .7rem;
                 @include sc(.5rem, #fff);
             }
         }
-        .activities_title_style{
+        .activities_title_style {
             text-align: center;
             margin-bottom: 1rem;
-            span{
+            span {
                 @include sc(.5rem, #fff);
                 padding: .2rem .4rem;
                 border: 0.025rem solid #555;
                 border-radius: 0.5rem;
             }
         }
-        .close_activities{
+        .close_activities {
             position: absolute;
             bottom: 1rem;
             @include cl;
         }
     }
 
-    .change_show_type{
+    .change_show_type {
         display: flex;
         padding: .3rem 0 .6rem;
         border-bottom: 1px solid #ebebeb;
         background-color: #fff;
-        div{
+        div {
             flex: 1;
             text-align: center;
-            span{
+            span {
                 @include sc(.65rem, #666);
                 padding: .2rem .1rem;
                 border-bottom: 0.22rem solid #fff;
             }
-            .activity_show{
+            .activity_show {
                 color: #3190e8;
                 border-color: #3190e8;
             }
         }
     }
 
-    .food_container{
+    .food_container {
         display: flex;
         flex: 1;
         padding-bottom: 2rem;
     }
-    .menu_container{
+
+    .menu_container {
         display: flex;
         flex: 1;
         position: relative;
         overflow-y: hidden;
-        .menu_left{
+        .menu_left {
             width: 3.8rem;
-            .menu_left_li{
+            .menu_left_li {
                 position: relative;
                 padding: .7rem .3rem;
                 border-left: 0.15rem solid #f8f8f8;
                 border-bottom: 0.025rem solid #ededed;
                 box-sizing: border-box;
-                img{
+                img {
                     @include wh(.5rem, .6rem);
                 }
-                span{
+                span {
                     @include sc(.6rem, #666);
                 }
-                .category_num{
+                .category_num {
                     position: absolute;
                     top: .1rem;
                     right: .1rem;
@@ -672,47 +954,48 @@
                     background-color: #ff461d;
                     @include sc(.5rem, #fff);
                     font-family: Helvetica Neue, Tahoma, Arial;
+                    text-align: center;
                 }
             }
-            .activity_menu{
+            .active_menu {
                 border-left: 0.15rem solid #3190e8;
                 background-color: #fff;
-                span:nth-of-type(1){
+                span:nth-of-type(1) {
                     font-weight: bold;
                 }
             }
         }
-        .menu_right{
+        .menu_right {
             flex: 4;
             overflow-y: auto;
-            .menu_detail_header{
+            .menu_detail_header {
                 position: relative;
                 width: 100%;
                 padding: .4rem;
                 @include fj;
                 align-items: center;
-                .menu_detail_header_left{
+                .menu_detail_header_left {
                     width: 11rem;
                     white-space: nowrap;
                     overflow: hidden;
-                    .menu_item_title{
+                    .menu_item_title {
                         @include sc(.7rem, #666);
                         font-weight: bold;
                     }
-                    .menu_item_description{
+                    .menu_item_description {
                         @include sc(.5rem, #999);
                         width: 30%;
                         overflow: hidden;
                     }
                 }
-                .menu_detail_header_right{
+                .menu_detail_header_right {
                     display: block;
                     @include wh(.5rem, 1rem);
                     @include bis('../../images/icon_point.png');
                     background-size: 100% .4rem;
                     background-position: left center;
                 }
-                .description_tip{
+                .description_tip {
                     position: absolute;
                     top: 1.5rem;
                     right: .2rem;
@@ -724,12 +1007,12 @@
                     background-color: #39373a;
                     z-index: 14;
                     opacity: 0.95;
-                    span{
+                    span {
                         @include sc(.55rem, #fff);
                         line-height: .6rem;
                     }
                 }
-                .description_tip::after{
+                .description_tip::after {
                     content: '';
                     position: absolute;
                     top: -.5rem;
@@ -739,32 +1022,32 @@
                     transform: rotate(-45deg) translateY(.41rem);
                 }
             }
-            .menu_detail_list{
+            .menu_detail_list {
                 position: relative;
                 padding: .6rem .4rem;
                 border-bottom: 1px solid #f8f8f8;
                 background-color: #fff;
                 overflow: hidden;
-                .menu_detail_link{
+                .menu_detail_link {
                     display: flex;
-                    .menu_food_img{
+                    .menu_food_img {
                         margin-right: .4rem;
-                        img{
+                        img {
                             @include wh(2rem, 2rem);
                             display: block;
                         }
                     }
-                    .menu_food_description{
+                    .menu_food_description {
                         width: 100%;
-                        .food_description_head{
+                        .food_description_head {
                             @include fj;
                             margin-bottom: .2rem;
-                            .description_foodname{
+                            .description_foodname {
                                 @include sc(.7rem, #333);
                             }
-                            .attributes_ul{
+                            .attributes_ul {
                                 display: flex;
-                                li{
+                                li {
                                     font-size: .3rem;
                                     height: .6rem;
                                     line-height: .35rem;
@@ -773,11 +1056,11 @@
                                     border: 1px solid #666;
                                     border-radius: 0.3rem;
                                     transform: scale(0.8);
-                                    p{
+                                    p {
                                         white-space: nowrap;
                                     }
                                 }
-                                .attribute_new{
+                                .attribute_new {
                                     display: flex;
                                     align-items: flex-end;
                                     position: absolute;
@@ -788,7 +1071,7 @@
                                     border-radius: 0;
                                     background-color: #4cd964;
                                     transform: rotate(-45deg) translate(-0.1rem, -1.5rem);
-                                    p{
+                                    p {
                                         @include sc(.4rem, #fff);
                                         text-align: center;
                                         flex: 1;
@@ -796,19 +1079,19 @@
                                 }
                             }
                         }
-                        .food_description_content{
+                        .food_description_content {
                             @include sc(0.5rem, #999);
                             line-height: .6rem;
                         }
-                        .food_description_sale_rating{
+                        .food_description_sale_rating {
                             line-height: .8rem;
-                            span{
+                            span {
                                 @include sc(0.5rem, #333);
                             }
                         }
-                        .food_activity{
+                        .food_activity {
                             line-height: .4rem;
-                            span{
+                            span {
                                 display: inline-block;
                                 margin-left: -0.35rem;
                                 padding: .08rem;
@@ -820,14 +1103,14 @@
                         }
                     }
                 }
-                .menu_detail_footer{
+                .menu_detail_footer {
                     @include fj;
                     margin-top: .3rem;
                     margin-left: 2.4rem;
                     font-size: 0;
                     .food_price {
-                        span{
-                            font-family: 'Helvetica Neue',Tahoma,Arial;
+                        span {
+                            font-family: 'Helvetica Neue', Tahoma, Arial;
                         }
                         span:nth-of-type(1) {
                             @include sc(.5rem, #f60);
@@ -846,17 +1129,18 @@
             }
         }
     }
-    .buy_cart_container{
+
+    .buy_cart_container {
         display: flex;
-        position: absolute;
+        position: fixed;
         left: 0;
         bottom: 0;
         @include wh(100%, 2rem);
         background-color: #3d3d3f;
         z-index: 13;
-        .cart_icon_num{
+        .cart_icon_num {
             flex: 1;
-            .cart_icon_container{
+            .cart_icon_container {
                 display: flex;
                 position: absolute;
                 left: .5rem;
@@ -865,13 +1149,13 @@
                 border: 0.18rem solid #444;
                 border-radius: 50%;
                 background-color: #3d3d3f;
-                .cart_icon{
+                .cart_icon {
                     @include wh(1.2rem, 1.2rem);
                 }
-                .cart_list_length{
+                .cart_list_length {
                     position: absolute;
                     top: -.25rem;
-                    left: -.25rem;
+                    right: -.25rem;
                     min-width: .7rem;
                     height: .7rem;
                     line-height: .7rem;
@@ -883,26 +1167,29 @@
                     background-color: #ff461d;
                 }
             }
-            .cart_icon_active{
+            .move_in_cart{
+                animation: myMove .5s ease-in-out;
+            }
+            .cart_icon_active {
                 background-color: #3190e8;
             }
-            .cart_num{
+            .cart_num {
                 @include ct;
                 left: 3.5rem;
-                div{
+                div {
                     color: #fff;
                 }
-                div:nth-of-type(1){
+                div:nth-of-type(1) {
                     font-size: .8rem;
                     font-weight: bold;
                     margin-bottom: .1rem;
                 }
-                div:nth-of-type(2){
+                div:nth-of-type(2) {
                     font-size: .4rem;
                 }
             }
         }
-        .go_to_pay{
+        .go_to_pay {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -910,46 +1197,93 @@
             right: 0;
             @include wh(5rem, 100%);
             background-color: #535356;
-            .go_to_pay_button_style{
+            .go_to_pay_button_style {
                 @include sc(.7rem, #fff);
                 font-weight: bold;
             }
         }
+        .go_to_pay_active {
+            background-color: #4cd964;
+        }
     }
-    .cart_food_list{
+
+    .cart_food_list {
         position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
         padding-bottom: 2rem;
         background-color: #fff;
-        header{
+        z-index: 12;
+        header {
             @include fj;
             align-items: center;
             padding: .3rem .6rem;
             background-color: #eceff1;
-            h4{
+            h4 {
                 @include sc(.7rem, #666);
             }
-            svg{
+            svg {
                 @include wh(.6rem, .6rem);
                 vertical-align: middle;
             }
-            .clear_cart{
+            .clear_cart {
                 @include sc(.6rem, #666);
             }
         }
-        .cart_food_details{
+        .cart_food_details {
             max-height: 20rem;
             overflow-y: auto;
             background-color: #fff;
-            .cart_food_li{
+            .cart_food_li {
                 @include fj;
                 padding: .6rem .5rem;
+                .cart_list_num {
+                    width: 55%;
+                    p:nth-of-type(1) {
+                        @include sc(.7rem, #666);
+                        font-weight: bold;
+                    }
+                    p:nth-of-type(2) {
+                        @include sc(.4rem, #666);
+                    }
+                }
+                .cart_list_price {
+                    font-size: 0;
+                    span:nth-of-type(1) {
+                        @include sc(.6rem, #f60);
+                        font-family: Helvetica Neue, Tahoma;
+                    }
+                    span:nth-of-type(2) {
+                        @include sc(.7rem, #f60);
+                        font-weight: bold;
+                        font-family: Helvetica Neue, Tahoma;
+                    }
+                }
+                .cart_list_control {
+                    display: flex;
+                    align-items: center;
+                    svg {
+                        @include wh(.9rem, .9rem);
+                        fill: $blue;
+                    }
+                    span {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .cart_num {
+                        min-width: 1rem;
+                        @include sc(.65rem, #666);
+                        text-align: center;
+                        font-family: Helvetica Neue, Tahoma;
+                    }
+                }
             }
         }
     }
-    .screen_cover{
+
+    .screen_cover {
         position: fixed;
         top: 0;
         right: 0;
@@ -958,60 +1292,61 @@
         background-color: rgba(0, 0, 0, .3);
         z-index: 11;
     }
-    .rating_container{
+
+    .rating_container {
         flex: 1;
         flex-direction: column;
         overflow-y: hidden;
-        p, span, li, time{
+        p, span, li, time {
             font-family: Helvetica Neue, Tahoma, Arial;
         }
-        .rating_header{
+        .rating_header {
             display: flex;
             margin-bottom: .5rem;
             padding: .8rem .5rem;
             background-color: #fff;
-            .rating_header_left{
+            .rating_header_left {
                 flex: 3;
                 text-align: center;
-                p:nth-of-type(1){
+                p:nth-of-type(1) {
                     @include sc(1.2rem, #f60);
                 }
-                p:nth-of-type(2){
+                p:nth-of-type(2) {
                     @include sc(.65rem, #666);
                     margin-bottom: .1rem;
                 }
-                p:nth-of-type(3){
+                p:nth-of-type(3) {
                     @include sc(.4rem, #999);
                 }
             }
-            .rating_header_right{
+            .rating_header_right {
                 flex: 4;
-                p{
+                p {
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
                     font-size: .65rem;
                     line-height: 1rem;
-                    span:nth-of-type(1){
+                    span:nth-of-type(1) {
                         margin-right: .5rem;
                         color: #666;
                     }
-                    .rating_num{
+                    .rating_num {
                         width: 3rem;
                         @include sc(.55rem, #f60);
                     }
-                    .delivery_time{
+                    .delivery_time {
                         @include sc(.4rem, #999);
                     }
                 }
             }
         }
-        .tag_list_ul{
+        .tag_list_ul {
             display: flex;
             flex-wrap: wrap;
             padding: .5rem;
             background-color: #fff;
-            li{
+            li {
                 margin: 0 .4rem .2rem 0;
                 padding: .3rem;
                 border: 1px;
@@ -1019,69 +1354,69 @@
                 @include sc(.6rem, #6d7885);
                 background-color: #ebf5ff;
             }
-            .tagActive{
+            .tagActive {
                 color: #fff;
                 background-color: $blue;
             }
-            .unsatisfied{
+            .unsatisfied {
                 color: #aaa;
                 background-color: #f5f5f5;
             }
         }
-        .rating_list_ul{
+        .rating_list_ul {
             padding: 0 .5rem;
             background-color: #fff;
-            .rating_list_li{
+            .rating_list_li {
                 display: flex;
                 padding: .6rem 0;
                 border-top: 1px solid #f1f1f1;
-                .user_avatar{
+                .user_avatar {
                     @include wh(1.5rem, 1.5rem);
                     margin-right: .8rem;
                     border: 0.025rem;
                     border-radius: 50%;
                 }
-                .rating_list_details{
+                .rating_list_details {
                     flex: 1;
-                    header{
+                    header {
                         @include fj;
                         flex: 1;
                         margin-bottom: .3rem;
-                        .username_star{
+                        .username_star {
                             @include sc(.55rem, #666);
-                            .username{
+                            .username {
                                 margin-bottom: .2rem;
                                 color: #666;
                             }
-                            .star_desc{
+                            .star_desc {
                                 display: flex;
                                 align-items: center;
-                                .time_spent_desc{
+                                .time_spent_desc {
                                     @include sc(.55rem, #666);
                                     margin-left: .15rem;
                                 }
                             }
                         }
-                        .rated_at{
+                        .rated_at {
                             @include sc(.4rem, #999);
                         }
                     }
-                    .food_img_ul{
+                    .food_img_ul {
                         display: flex;
                         flex-wrap: wrap;
                         margin-bottom: .4rem;
-                        li{
-                            img{
+                        li {
+                            img {
                                 display: block;
                                 @include wh(3rem, 3rem);
                                 margin-right: .4rem;
                             }
                         }
                     }
-                    .food_name_ul{
+                    .food_name_ul {
                         display: flex;
                         flex-wrap: wrap;
-                        li{
+                        li {
                             width: 2.2rem;
                             margin-right: .3rem;
                             margin-bottom: 4px;
@@ -1095,7 +1430,8 @@
             }
         }
     }
-    .specs_cover{
+
+    .specs_cover {
         position: fixed;
         top: 0;
         left: 0;
@@ -1104,7 +1440,8 @@
         background-color: rgba(0, 0, 0, .4);
         z-index: 17;
     }
-    .specs_list{
+
+    .specs_list {
         position: fixed;
         top: 35%;
         left: 15%;
@@ -1113,29 +1450,29 @@
         border-radius: 0.2rem;
         background-color: #fff;
         z-index: 18;
-        .specs_list_header{
-            h4{
+        .specs_list_header {
+            h4 {
                 padding: .5rem;
                 @include sc(.7rem, #222);
                 font-weight: normal;
                 text-align: center;
             }
-            .specs_cancel{
+            .specs_cancel {
                 position: absolute;
                 top: .5rem;
                 right: .5rem;
             }
         }
-        .specs_details{
+        .specs_details {
             padding: .5rem;
-            .specs_detail_title{
+            .specs_detail_title {
                 @include sc(.6rem, #666);
             }
-            ul{
+            ul {
                 display: flex;
                 flex-wrap: wrap;
                 padding: .4rem 0;
-                li{
+                li {
                     margin-right: .5rem;
                     margin-bottom: .2rem;
                     padding: .3rem .5rem;
@@ -1143,13 +1480,13 @@
                     border-radius: .2rem;
                     font-size: .6rem;
                 }
-                .specs_active{
+                .specs_active {
                     color: $blue;
                     border-color: $blue;
                 }
             }
         }
-        .specs_footer{
+        .specs_footer {
             @include fj;
             align-items: center;
             padding: 0.5rem;
@@ -1157,20 +1494,20 @@
             border-bottom-left-radius: .2rem;
             border-bottom-right-radius: .2rem;
             background-color: #f9f9f9;
-            .specs_price{
-                span{
+            .specs_price {
+                span {
                     color: #ff6000;
                 }
-                span:nth-of-type(1){
+                span:nth-of-type(1) {
                     font-size: .5rem;
                 }
-                span:nth-of-type(2){
+                span:nth-of-type(2) {
                     font-size: .8rem;
                     font-weight: bold;
                     font-family: Helvetica Neue, Tahoma;
                 }
             }
-            .specs_addto_cart{
+            .specs_addto_cart {
                 @include wh(4rem, 1.3rem);
                 @include sc(.6rem, #fff);
                 line-height: 1.3rem;
@@ -1181,19 +1518,65 @@
             }
         }
     }
+
+    .show_delete_tip {
+        position: fixed;
+        top: 50%;
+        left: 15%;
+        width: 70%;
+        padding: .5rem 0;
+        border: 1px;
+        border-radius: 0.25rem;
+        @include sc(.65rem, #fff);
+        text-align: center;
+        background-color: rgba(0, 0, 0, .8);
+        transform: translateY(-50%);
+        z-index: 18;
+    }
+
+    .move_dot{
+        position: fixed;
+        left: 30px;
+        bottom: 30px;
+        z-index: 999;
+        svg{
+            @include wh(.9rem, .9rem);
+            fill: $blue;
+        }
+    }
+
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }
+
     .fade-enter, .fade-leave-active {
         opacity: 0;
     }
-    .fade-choose-enter-active, .fade-choose-leave-active{
+
+    .fade-choose-enter-active, .fade-choose-leave-active {
         transition: opacity .5s;
     }
-    .fade-choose-leave, .fade-choose-leave-active{
+
+    .fade-choose-leave, .fade-choose-leave-active {
         display: none;
     }
-    .fade-choose-enter, .fade-choose-leave-active{
+
+    .fade-choose-enter, .fade-choose-leave-active {
+        opacity: 0;
+    }
+
+    .toggle-cart-enter-active, .toggle-cart-leave-active {
+        transition: all .3s ease-out;
+    }
+
+    .toggle-cart-enter, .toggle-cart-leave-active {
+        transform: translateY(100%);
+    }
+    .router-slide-enter-active, .router-slide-leave-active{
+        transition: all .4s;
+    }
+    .router-slide-enter, .router-slide-leave-active{
+        transform: translate3d(2rem, 0, 0);
         opacity: 0;
     }
 </style>

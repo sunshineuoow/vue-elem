@@ -14,14 +14,14 @@
 		<nav class="msite_nav">
 			<swiper :options="swiperOption" v-if="foodTypes.length">
 				<swiper-slide class="food_types_container" v-for="(item, index) in foodTypes" :key="index">
-					<a v-for="foodItem in item" class="link_to_food">
+					<router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
 						<figure>
 							<img :src="imgBaseUrl + foodItem.image_url">
 							<figcaption>
 									{{ foodItem.title }}
 							</figcaption>
 						</figure>
-					</a>
+					</router-link>
 				</swiper-slide>
 				<div class="swiper-pagination" slot="pagination"></div>
 			</swiper>
