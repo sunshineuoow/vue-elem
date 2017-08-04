@@ -139,6 +139,7 @@
 			    this.showLoading = true;
 			    this.offset = 0;
 			    let res = await shopList(this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportsId);
+			    this.hideLoading();
 			    this.shopListArr = [...res];
 
 			},

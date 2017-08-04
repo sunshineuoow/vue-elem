@@ -107,6 +107,11 @@
 			]),
 			getCategoryId(url){
 				let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
+				if (/restaurant_category_id/gi.test(urlData)) {
+				    return JSON.parse(urlData).restaurant_category_id.id;
+				} else {
+				    return '';
+				}
 			}
 		}
 	}

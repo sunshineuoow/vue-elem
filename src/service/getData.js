@@ -101,6 +101,32 @@ export const searchRestaurant = (geohash, keyword) => fetch('/v4/restaurants/', 
 });
 
 /**
+ * 获取food页面的category种类列表
+ */
+export const foodCategory = (latitude, longitude) => fetch('/shopping/v2/restaurant/category', {
+	latitude,
+	longitude
+});
+
+/**
+ * 获取food页面配送方式
+ */
+export const foodDelivery = (latitude, longitude) => fetch('/shopping/v1/restaurants/delivery_modes', {
+	latitude,
+	longitude,
+	kw: ''
+});
+
+/**
+ * 获取food页面商家属性活动列表
+ */
+export const foodActivity = (latitude, longitude) => fetch('/shopping/v1/restaurants/activity_attributes', {
+	latitude,
+	longitude,
+	kw: ''
+});
+
+/**
  * 获取shop商铺详情
  */
 export const shopDetails = (shopId, latitude, longitude) => fetch('/shopping/restaurant/' + shopId, {
