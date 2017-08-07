@@ -160,3 +160,39 @@ export const ratingScores = shopId => fetch('/ugc/v2/restaurants/' + shopId + '/
  * 获取商铺评价分类
  */
 export const ratingTags = shopId => fetch('/ugc/v2/restaurants/' + shopId + '/ratings/tags');
+
+/**
+ * 获取短信验证码
+ */
+export const mobileCode = phone => fetch('v4/mobile/verify_code/send', {
+	mobile: phone,
+	scene: 'login',
+	type: 'sms'
+}, 'POST');
+
+/**
+ * 获取图片验证码
+ */
+export const getcaptchas = () => fetch('/v1/captchas', {}, 'POST');
+
+/**
+ * 检测用户是否存在
+ */
+export const checkExsis = (checkNum, type) => fetch('/v1/users/exists', {
+	[type]: checkNum,
+	type
+})
+
+/**
+ * 账号密码登录
+ */
+export const accountLogin = (username, password, captcha_code) => fetch('/v2/login', {
+	username,
+	password,
+	captcha_code
+}, 'POST');
+
+/**
+ * 获取服务中心信息
+ */
+export const getService = () => fetch('/v3/profile/explain');

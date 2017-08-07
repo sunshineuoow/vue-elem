@@ -136,5 +136,22 @@ export default {
 		state.cartList = {...state.cartList};
 		setStore('buyCart', state.cartList);
 	},
-
+	//记录用户信息
+	[RECORD_USERINFO](state, username) {
+		state.userInfo = Object.assign({}, state.userInfo, {username});
+	},
+	//获取用户信息存入vuex
+	[GET_USERINFO](state, info) {
+		if (state.userInfo && (state.userInfo.username !== info.username)) return;
+		if (!state.login) return;
+		if (!info.message) {
+			state.userInfo = {...info};
+		} else {
+			state.userInfo = null;
+		}
+	},
+	//保存问题详情
+	[SAVE_QUESTION](state, question) {
+		state.question = {...question};
+	}
 }

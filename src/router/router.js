@@ -9,6 +9,14 @@ const foodDetail = r => require.ensure([], () => r(require('../pages/shop/childr
 const shopDetail = r => require.ensure([], () => r(require('../pages/shop/children/shopDetail')), 'shopDetail');
 const shopSafe = r => require.ensure([], () => r(require('../pages/shop/children/children/shopSafe')), 'shopSafe');
 const food = r => require.ensure([], () => r(require('../pages/food/food')), 'food');
+const login = r => require.ensure([], () => r(require('../pages/login/login')), 'login');
+const profile = r => require.ensure([], () => r(require('../pages/profile/profile')), 'profile');
+const vipcard = r => require.ensure([], () => r(require('../pages/vipcard/vipcard')), 'vipcard');
+const vipDescription = r => require.ensure([], () => r(require('../pages/vipcard/children/vipDescription')), 'vipDescription');
+const useCart =  r => require.ensure([], () => r(require('../pages/vipcard/children/useCart')), 'useCart');
+const service = r => require.ensure([], () => r(require('../pages/service/service')), 'service');
+const questionDetail = r => require.ensure([], () => r(require('../pages/service/children/questionDetail')), 'questionDetail');
+const download = r => require.ensure([], () => r(require('../pages/download/download')), 'download');
 
 export default [{
 	path: '/',
@@ -33,7 +41,9 @@ export default [{
 		{
 			path: '/msite',
 			component: msite,
-			meta: { keepAlive: true },
+			meta: {
+				keepAlive: true
+			},
 		},
 		//特色商铺列表页
 		{
@@ -49,20 +59,56 @@ export default [{
 		{
 			path: '/shop',
 			component: shop,
-			children: [
+			children: [{
+				path: 'foodDetail',
+				component: foodDetail
+			}, {
+				path: 'shopDetail',
+				component: shopDetail,
+				children: [{
+					path: 'shopSafe',
+					component: shopSafe
+				}]
+			}]
+		},
+		//登录注册页
+		{
+			path: '/login',
+			component: login
+		},
+		//个人信息页
+		{
+			path: '/profile',
+			component: profile,
+		},
+		//vip卡页
+		{
+			path: '/vipcard',
+			component: vipcard,
+			children:[
 				{
-					path: 'foodDetail',
-					component: foodDetail
+					path: 'vipDescription',
+					component: vipDescription
 				},
 				{
-					path: 'shopDetail',
-					component: shopDetail,
-					children: [{
-						path: 'shopSafe',
-						component: shopSafe
-					}]
+					path: 'useCart',
+					component: useCart
 				}
 			]
+		},
+		//服务页
+		{
+			path: '/service',
+			component: service,
+			children: [{
+				path: 'questionDetail',
+				component: questionDetail
+			},]
+		},
+		//下载页
+		{
+			path: '/download',
+			component: download,
 		}
 	]
 }]
