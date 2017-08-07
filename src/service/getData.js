@@ -196,3 +196,12 @@ export const accountLogin = (username, password, captcha_code) => fetch('/v2/log
  * 获取服务中心信息
  */
 export const getService = () => fetch('/v3/profile/explain');
+
+/**
+ * 兑换会员卡
+ */
+export const vipCart = (id, number, password) => fetch('/member/v1/users/' + id + '/delivery_card/physical_card/bind', {
+	number,
+	password,
+},'POST');
+

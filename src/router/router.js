@@ -11,9 +11,14 @@ const shopSafe = r => require.ensure([], () => r(require('../pages/shop/children
 const food = r => require.ensure([], () => r(require('../pages/food/food')), 'food');
 const login = r => require.ensure([], () => r(require('../pages/login/login')), 'login');
 const profile = r => require.ensure([], () => r(require('../pages/profile/profile')), 'profile');
+const balance = r => require.ensure([], () => r(require('../pages/balance/balance')), 'balance');
+const balanceDetail = r => require.ensure([], () => r(require('../pages/balance/children/balanceDetail')), 'balanceDetail');
+const points = r => require.ensure([], () => r(require('../pages/points/points')), 'points');
+const pointsDetail = r => require.ensure([], () => r(require('../pages/points/children/detail')), 'pointsDetail');
 const vipcard = r => require.ensure([], () => r(require('../pages/vipcard/vipcard')), 'vipcard');
 const vipDescription = r => require.ensure([], () => r(require('../pages/vipcard/children/vipDescription')), 'vipDescription');
 const useCart =  r => require.ensure([], () => r(require('../pages/vipcard/children/useCart')), 'useCart');
+const invoiceRecord = r => require.ensure([], () => r(require('../pages/vipcard/children/invoiceRecord')), 'invoiceRecord');
 const service = r => require.ensure([], () => r(require('../pages/service/service')), 'service');
 const questionDetail = r => require.ensure([], () => r(require('../pages/service/children/questionDetail')), 'questionDetail');
 const download = r => require.ensure([], () => r(require('../pages/download/download')), 'download');
@@ -81,6 +86,24 @@ export default [{
 			path: '/profile',
 			component: profile,
 		},
+		//余额
+		{
+			path: '/balance',
+			component: balance,
+			children: [{
+				path: 'detail',
+				component: balanceDetail
+			}]
+		},
+		//积分
+		{
+			path: '/points',
+			component: points,
+			children: [{
+				path: 'detail',
+				component: pointsDetail
+			}]
+		},
 		//vip卡页
 		{
 			path: '/vipcard',
@@ -93,6 +116,10 @@ export default [{
 				{
 					path: 'useCart',
 					component: useCart
+				},
+				{
+					path: 'invoiceRecord',
+					component: invoiceRecord
 				}
 			]
 		},
