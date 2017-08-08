@@ -130,7 +130,10 @@
 				</router-link>
 			</section>
 		</section>
-		<footGuide></footGuide>
+		<foot-guide></foot-guide>
+		<transition name="router-slide" mode="out-in">
+			<router-view></router-view>
+		</transition>
 	</div>
 </template>
 
@@ -213,6 +216,11 @@
 				@include wh(2.5rem, 2.5rem);
 				border-radius: 50%;
 				vertical-align: middle;
+				.privateImage-svg{
+					@include wh(2.5rem, 2.5rem);
+					border-radius: 50%;
+					background-color: #fff;
+				}
 			}
 			.user-info{
 				flex-grow: 1;
@@ -330,5 +338,13 @@
 				}
 			}
 		}
+	}
+
+	.router-slide-enter-active, .router-slide-leave-active{
+		transition: all .4s;
+	}
+	.router-slide-enter, .router-slide-leave-active{
+		transform: translate3d(2rem, 0, 0);
+		opacity: 0;
 	}
 </style>

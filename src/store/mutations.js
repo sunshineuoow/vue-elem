@@ -137,8 +137,10 @@ export default {
 		setStore('buyCart', state.cartList);
 	},
 	//记录用户信息
-	[RECORD_USERINFO](state, username) {
-		state.userInfo = Object.assign({}, state.userInfo, {username});
+	[RECORD_USERINFO](state, info){
+		state.userInfo = info;
+		state.login = true;
+		setStore('user_id', info.user_id);
 	},
 	//获取用户信息存入vuex
 	[GET_USERINFO](state, info) {
@@ -150,8 +152,31 @@ export default {
 			state.userInfo = null;
 		}
 	},
+	//修改用户名
+	[RETSET_NAME](state, username) {
+		state.userInfo = Object.assign({}, state.userInfo, {username});
+		
+	},
+	//退出登录
+	[OUT_LOGIN](state) {
+		state.userInfo = {};
+		state.login = false;
+	},
+	//保存图片
+	[SAVE_AVANDER](state, imgPath) {
+		state.imgPath = imgPath;
+	},
+	//下单成功
+	[ORDER_SUCCESS](state, order) {
+		state.cartPrice = null;
+		state.orderMessage = order;
+	},
+	//会员卡价格保存
+	[BUY_CART](state, price) {
+		state.cartPrice = price;
+	},
 	//保存问题详情
 	[SAVE_QUESTION](state, question) {
 		state.question = {...question};
-	}
+	},
 }

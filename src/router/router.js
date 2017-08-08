@@ -11,8 +11,16 @@ const shopSafe = r => require.ensure([], () => r(require('../pages/shop/children
 const food = r => require.ensure([], () => r(require('../pages/food/food')), 'food');
 const login = r => require.ensure([], () => r(require('../pages/login/login')), 'login');
 const profile = r => require.ensure([], () => r(require('../pages/profile/profile')), 'profile');
+const info = r => require.ensure([], () => r(require('../pages/profile/children/info')), 'info');
+const setusername = r => require.ensure([], () => r(require('../pages/profile/children/setusername')), 'setusername');
 const balance = r => require.ensure([], () => r(require('../pages/balance/balance')), 'balance');
 const balanceDetail = r => require.ensure([], () => r(require('../pages/balance/children/balanceDetail')), 'balanceDetail');
+const benefit = r => require.ensure([], () => r(require('../pages/benefit/benefit')), 'benefit');
+const hbDescription = r => require.ensure([], () => r(require('../pages/benefit/children/hbDescription')), 'hbDescription');
+const coupon = r => require.ensure([], () => r(require('../pages/benefit/children/coupon')), 'coupon');
+const hbHistory = r => require.ensure([], () => r(require('../pages/benefit/children/hbHistory')), 'hbHistory');
+const exchange = r => require.ensure([], () => r(require('../pages/benefit/children/exchange')), 'exchange');
+const commend = r => require.ensure([], () => r(require('../pages/benefit/children/commend')), 'commend');
 const points = r => require.ensure([], () => r(require('../pages/points/points')), 'points');
 const pointsDetail = r => require.ensure([], () => r(require('../pages/points/children/detail')), 'pointsDetail');
 const vipcard = r => require.ensure([], () => r(require('../pages/vipcard/vipcard')), 'vipcard');
@@ -85,6 +93,16 @@ export default [{
 		{
 			path: '/profile',
 			component: profile,
+			children: [
+				{
+					path: 'info',
+					component: info
+				},
+				{
+					path: 'setusername',
+					component: setusername
+				}
+			]
 		},
 		//余额
 		{
@@ -94,6 +112,33 @@ export default [{
 				path: 'detail',
 				component: balanceDetail
 			}]
+		},
+		//优惠页
+		{
+			path: '/benefit',
+			component: benefit,
+			children: [
+				{
+					path: 'hbDescription',
+					component: hbDescription
+				},
+				{
+					path: 'coupon',
+					component: coupon
+				},
+				{
+					path: 'hbHistory',
+					component: hbHistory
+				},
+				{
+					path: 'exchange',
+					component: exchange
+				},
+				{
+					path: 'commend',
+					component: commend
+				}
+			]
 		},
 		//积分
 		{
