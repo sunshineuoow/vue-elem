@@ -13,6 +13,8 @@ const login = r => require.ensure([], () => r(require('../pages/login/login')), 
 const profile = r => require.ensure([], () => r(require('../pages/profile/profile')), 'profile');
 const info = r => require.ensure([], () => r(require('../pages/profile/children/info')), 'info');
 const setusername = r => require.ensure([], () => r(require('../pages/profile/children/setusername')), 'setusername');
+const address = r => require.ensure([], () => r(require('../pages/profile/children/children/address')), 'address');
+const add = r => require.ensure([], () => r(require('../pages/profile/children/children/children/add')), 'add');
 const balance = r => require.ensure([], () => r(require('../pages/balance/balance')), 'balance');
 const balanceDetail = r => require.ensure([], () => r(require('../pages/balance/children/balanceDetail')), 'balanceDetail');
 const benefit = r => require.ensure([], () => r(require('../pages/benefit/benefit')), 'benefit');
@@ -96,7 +98,19 @@ export default [{
 			children: [
 				{
 					path: 'info',
-					component: info
+					component: info,
+					children: [
+						{
+							path: 'address',
+							component: address,
+							children: [
+								{
+									path: 'add',
+									component: add
+								}
+							]
+						}
+					]
 				},
 				{
 					path: 'setusername',

@@ -198,6 +198,16 @@ export const accountLogin = (username, password, captcha_code) => fetch('/v2/log
 export const signout = () => fetch('/v2/signout');
 
 /**
+ * 个人中心里编辑地址
+ */
+export const getAddressList = user_id => fetch('/v1/users/' + user_id + '/addresses');
+
+/**
+ * 删除地址
+ */
+export const deleteAddress = (userid, addressid) => fetch('/v1/users/' + userid + '/addresses/' + addressid, {}, 'DELETE'); 
+
+/**
  * 获取红包
  */
 export const getHongbaoNum = id => fetch('/promotion/v2/users/' + id + '/hongbaos?limit=20&offset=0');

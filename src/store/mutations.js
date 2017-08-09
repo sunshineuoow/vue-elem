@@ -179,4 +179,8 @@ export default {
 	[SAVE_QUESTION](state, question) {
 		state.question = {...question};
 	},
+	//删除地址列表
+	[SAVE_ADDRESS](state, newAddress) {
+		state.removeAddress = newAddress;
+	}
 }

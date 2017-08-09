@@ -94,6 +94,9 @@
 			</section>
 		</section>
 		<alert-tip v-if="showAlert" @closeTip="showAlert = false" :alert-text="alertText"></alert-tip>
+		<transition name="router-slide" mode="out-in">
+			<router-view></router-view>
+		</transition>
 	</div>
 </template>
 
@@ -481,5 +484,13 @@ body .coverpart .cover-animate{
 }
 body .coverpart .cover-animate-leave{
     animation:zoomOut .4s;
+}
+
+.router-slide-enter-active, .router-slide-leave-active{
+	transition: all .4s;
+}
+.router-slide-enter, .router-slide-leave-active{
+	transform: translate3d(2rem, 0, 0);
+	opacity: 0;
 }
 </style>
