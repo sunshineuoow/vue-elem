@@ -182,5 +182,9 @@ export default {
 	//删除地址列表
 	[SAVE_ADDRESS](state, newAddress) {
 		state.removeAddress = newAddress;
+	},
+	//添加地址name
+	[SAVE_ADDDETAIL](state, addAddress) {
+		state.addAddress = addAddress;
 	}
 }
